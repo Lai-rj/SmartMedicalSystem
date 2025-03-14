@@ -51,4 +51,51 @@ public class UserController {
         }
         return objectMapper.writeValueAsString(result);
     }
+    @RequestMapping("/deleteUser")
+    public String deleteUser(Integer id) throws JsonProcessingException {
+        Map result = new HashMap<>();
+        QueryWrapper<User> wrapper=new QueryWrapper<>();
+        wrapper.eq("id",id);
+        boolean b = userService.remove(wrapper);
+        if(b){
+            result.put("flag",true);
+        }else{
+            result.put("flag",false);
+            result.put("messsage","删除失败！");
+        }
+        return objectMapper.writeValueAsString(result);
+    }
+    //http://localhost:8080/user?id=11&name=黄六&age=23&sex=男&phone=123456778&address=广州市海珠区&password=123456&codeId=1234
+    @RequestMapping("/updateUser")
+    public String updateUser(Integer id,User user) throws JsonProcessingException {
+        Map result = new HashMap<>();
+        QueryWrapper wrapper = new QueryWrapper();
+        wrapper.eq("id",id);
+        boolean b = userService.update(user,wrapper);
+        if(b){
+            result.put("flag",true);
+        }else{
+            result.put("flag",false);
+            result.put("messsage","更新失败！");
+        }
+        return objectMapper.writeValueAsString(result);
+    }
+    //http:localhost:8080/user/loginUser?phone=12345678&password=123456
+    @RequestMapping("/loginUser")
+    public String login(String phone,String password) throws JsonProcessingException {
+        Map result = new HashMap<>();
+        QueryWrapper wrapper = new QueryWrapper();
+        wrapper.eq("phone",phone);
+        wrapper.eq("password",password);
+        User user = userService.getOne(wrapper);
+        if(user!=null){
+            result.put("flag",true);
+            result.put("role","user");
+            result.put("user",user);
+        }else{
+            result.put("flag",false);
+            result.put("message","登录失败");
+        }
+        return objectMapper.writeValueAsString(result);
+    }
 }
