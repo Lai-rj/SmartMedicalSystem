@@ -1,6 +1,9 @@
 package com.example.smartmedicalsystem.controller;
 
 
+import com.example.smartmedicalsystem.service.IDepartmentService;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
@@ -14,7 +17,12 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2025-03-12
  */
 @RestController
-@RequestMapping("/example.smartmedicalsystem/department")
+@RequestMapping("/department")
 public class DepartmentController {
+    @Autowired
+    private IDepartmentService departmentService;
+    ObjectMapper objectMapper =new ObjectMapper();
+
+
 
 }

@@ -1,7 +1,9 @@
 package com.example.smartmedicalsystem.controller;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.smartmedicalsystem.entity.Doctor;
+import com.example.smartmedicalsystem.entity.Manager;
 import com.example.smartmedicalsystem.service.impl.DoctorServiceImpl;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -34,6 +36,23 @@ public class DoctorController {
         Map result=new HashMap();
         List<Doctor> list=doctorService.list();
         result.put("list",list);
+        return objectMapper.writeValueAsString(result);
+    }
+    @RequestMapping("/loginDoctor")
+    public String login(String phone,String password) throws JsonProcessingException {
+        Map result = new HashMap<>();
+        QueryWrapper wrapper = new QueryWrapper();
+        wrapper.eq("phone",phone);
+        wrapper.eq("password",password);
+        Doctor doctor = doctorService.getOne(wrapper);
+        if(doctor!=null){
+            result.put("flag",true);
+            result.put("role","doctor");
+            result.put("doctor",doctor);
+        }else{
+            result.put("flag",false);
+            result.put("message","登录失败");
+        }
         return objectMapper.writeValueAsString(result);
     }
 }
