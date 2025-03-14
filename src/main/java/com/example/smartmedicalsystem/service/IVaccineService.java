@@ -2,6 +2,11 @@ package com.example.smartmedicalsystem.service;
 
 import com.example.smartmedicalsystem.entity.Vaccine;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.example.smartmedicalsystem.mapper.VaccineMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.security.PrivateKey;
+import java.util.List;
 
 /**
  * <p>
@@ -12,5 +17,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2025-03-12
  */
 public interface IVaccineService extends IService<Vaccine> {
-
+    List<Vaccine> queryAll();
 }

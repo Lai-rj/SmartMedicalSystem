@@ -2,6 +2,7 @@ package com.example.smartmedicalsystem.controller;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.example.smartmedicalsystem.entity.Doctor;
 import com.example.smartmedicalsystem.entity.Manager;
 import com.example.smartmedicalsystem.entity.User;
 import com.example.smartmedicalsystem.service.IManagerService;
@@ -44,6 +45,16 @@ public class ManagerController {
             result.put("flag",false);
             result.put("message","登录失败");
         }
+        return objectMapper.writeValueAsString(result);
+    }
+
+    @RequestMapping("/selectById")
+    public String selectById(Integer id) throws JsonProcessingException {
+        Map result = new HashMap();
+        QueryWrapper<Manager> wrapper = new QueryWrapper();
+        wrapper.eq("id", id);
+        Manager manager = managerService.getOne(wrapper);
+        result.put("manager",manager);
         return objectMapper.writeValueAsString(result);
     }
 }

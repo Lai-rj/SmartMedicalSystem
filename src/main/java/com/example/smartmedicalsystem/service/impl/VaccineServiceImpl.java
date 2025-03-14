@@ -4,7 +4,10 @@ import com.example.smartmedicalsystem.entity.Vaccine;
 import com.example.smartmedicalsystem.mapper.VaccineMapper;
 import com.example.smartmedicalsystem.service.IVaccineService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * <p>
@@ -16,5 +19,10 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class VaccineServiceImpl extends ServiceImpl<VaccineMapper, Vaccine> implements IVaccineService {
-
+    @Autowired
+    private VaccineMapper vaccineMapper;
+    @Override
+    public List<Vaccine> queryAll(){
+        return vaccineMapper.queryAll();
+    }
 }
