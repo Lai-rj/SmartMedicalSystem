@@ -98,4 +98,16 @@ public class UserController {
         }
         return objectMapper.writeValueAsString(result);
     }
+    
+    @RequestMapping("/selectById")
+    public String selectById(Integer id) throws JsonProcessingException {
+        Map result=new HashMap();
+        QueryWrapper<User> wrapper=new QueryWrapper();
+        wrapper.eq("id",id);
+        User user=userService.getOne(wrapper);
+        result.put("user",user);
+        return objectMapper.writeValueAsString(result);
+    }
+
+
 }
