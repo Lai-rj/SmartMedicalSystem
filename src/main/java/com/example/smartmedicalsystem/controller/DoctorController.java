@@ -2,6 +2,7 @@ package com.example.smartmedicalsystem.controller;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.example.smartmedicalsystem.entity.Doctor;
 import com.example.smartmedicalsystem.entity.Manager;
 import com.example.smartmedicalsystem.entity.User;
@@ -13,6 +14,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
@@ -67,6 +69,79 @@ public class DoctorController {
         wrapper.eq("id", id);
         Doctor doctor = doctorService.getOne(wrapper);
         result.put("doctor", doctor);
+        result.put("role","doctor");
+        return objectMapper.writeValueAsString(result);
+    }
+
+    @RequestMapping("/add")
+    public String addDoctor(Doctor newDoctor) throws JsonProcessingException {
+        Map result = new HashMap();
+        boolean flag = doctorService.save(newDoctor);
+        if(flag){
+            result.put("message","success");
+        }
+        else{
+            result.put("message","fail");
+        }
+        return objectMapper.writeValueAsString(result);
+    }
+
+    @RequestMapping("/update")
+    public String updateDoctor(Doctor doctor) throws JsonProcessingException {
+        Map result = new HashMap();
+        UpdateWrapper<Doctor> wrapper = new UpdateWrapper<>();
+        wrapper.eq("doctor", doctor);
+        boolean flag = doctorService.update(wrapper);
+        if(flag){
+            result.put("message","success");
+        }
+        else{
+            result.put("message","fail");
+        }
+        return objectMapper.writeValueAsString(result);
+    }
+
+    @RequestMapping("/updateStatus")
+    public String updateStatus(Integer id,int status) throws JsonProcessingException {
+        Map result = new HashMap();
+        UpdateWrapper<Doctor> wrapper = new UpdateWrapper<>();
+        wrapper.eq("id",id);
+        wrapper.eq("status",status);
+        boolean flag = doctorService.update(wrapper);
+        if(flag){
+            result.put("message","success");
+        }
+        else{
+            result.put("message","fail");
+        }
+        return objectMapper.writeValueAsString(result);
+    }
+
+    @RequestMapping("/delete")
+    public String batchDelete(Integer id) throws JsonProcessingException {
+        Map result = new HashMap();
+        boolean flag = doctorService.removeById(id);
+        if(flag){
+            result.put("message","success");
+        }
+        else{
+            result.put("message","fail");
+        }
+        return objectMapper.writeValueAsString(result);
+    }
+
+    @RequestMapping("/batchDelete")
+    public String batchDelete(List<Integer> ids) throws JsonProcessingException {
+        Map<String, Object> result = new HashMap<>();
+
+        // 批量删除医生记录
+        boolean flag = doctorService.removeByIds(ids); // 假设 doctorService 有这个方法
+        if (flag) {
+            result.put("message", "success");
+        } else {
+            result.put("message", "fail");
+        }
+
         return objectMapper.writeValueAsString(result);
     }
 }
