@@ -39,4 +39,13 @@ public class VaccineController {
         result.put("list",list);
         return objectMapper.writeValueAsString(result);
     }
+
+    //http://localhost:8088/vaccine/selectByName?name=狂犬疫苗
+    @RequestMapping("/selectByName")
+    public String selectByName(String name) throws JsonProcessingException {
+        Map result=new HashMap();
+        Vaccine vaccine=vaccineService.selectByName(name);
+        result.put("list",vaccine);
+        return objectMapper.writeValueAsString(result);
+    }
 }

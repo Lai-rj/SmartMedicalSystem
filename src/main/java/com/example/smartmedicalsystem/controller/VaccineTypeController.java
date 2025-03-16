@@ -33,11 +33,22 @@ public class VaccineTypeController {
     ObjectMapper objectMapper=new ObjectMapper();
 
     @RequestMapping("/queryAll")
-    public String queryAll() throws JsonProcessingException {
+    public String queryAll(String vaccineName) throws JsonProcessingException {
         Map result = new HashMap<>();
         QueryWrapper<VaccineType> wrapper = new QueryWrapper();
         List<VaccineType> list= vaccineTypeService.list(wrapper);
         result.put("list",list);
+        return objectMapper.writeValueAsString(result);
+    }
+
+    //http://localhost:8088/vaccineType/selectByName?name=灭活疫苗
+    @RequestMapping("/selectByName")
+    public String selectByName(String name) throws JsonProcessingException {
+        Map result=new HashMap();
+        QueryWrapper<VaccineType> wrapper=new QueryWrapper();
+        wrapper.eq("name",name);
+        VaccineType vaccineType=vaccineTypeService.getOne(wrapper);
+        result.put("list",vaccineType);
         return objectMapper.writeValueAsString(result);
     }
 

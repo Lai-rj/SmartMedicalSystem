@@ -4,6 +4,7 @@ package com.example.smartmedicalsystem.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.smartmedicalsystem.entity.Appointment;
 import com.example.smartmedicalsystem.entity.AppointmentVaccine;
+import com.example.smartmedicalsystem.entity.User;
 import com.example.smartmedicalsystem.entity.VaccineType;
 import com.example.smartmedicalsystem.service.impl.AppointmentVaccineServiceImpl;
 import com.example.smartmedicalsystem.service.impl.VaccineTypeServiceImpl;
@@ -39,6 +40,17 @@ public class AppointmentVaccineController {
         QueryWrapper<AppointmentVaccine> wrapper = new QueryWrapper();
         List<AppointmentVaccine> list= appointmentVaccineService.list(wrapper);
         result.put("list",list);
+        return objectMapper.writeValueAsString(result);
+    }
+
+    //http://localhost:8088/appVaccine/selectByAppVaccineId?vaccine_id=5
+    @RequestMapping("/selectByAppVaccineId")
+    public String selectById(Integer vaccine_id) throws JsonProcessingException {
+        Map result=new HashMap();
+        QueryWrapper<AppointmentVaccine> wrapper=new QueryWrapper();
+        wrapper.eq("vaccine_id",vaccine_id);
+        AppointmentVaccine appointmentVaccine=appointmentVaccineService.getOne(wrapper);
+        result.put("list",appointmentVaccine);
         return objectMapper.writeValueAsString(result);
     }
 }

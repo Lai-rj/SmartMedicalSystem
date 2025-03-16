@@ -5,4 +5,9 @@
         SELECT id, name, type_id, `function`, target, adverse_reaction, producer, produce_time, status
         FROM vaccine
     </select>
+
+    <select id="selectByName" resultType="com.example.smartmedicalsystem.entity.Vaccine" parameterType="String">
+        SELECT id, name, type_id, `function`, target, adverse_reaction, producer, produce_time, status
+        FROM vaccine where name=#{name}
+    </select>
 </mapper>

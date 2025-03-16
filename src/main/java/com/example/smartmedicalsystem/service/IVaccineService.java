@@ -18,4 +18,5 @@ import java.util.List;
  */
 public interface IVaccineService extends IService<Vaccine> {
     List<Vaccine> queryAll();
+    Vaccine selectByName(String name);
 }

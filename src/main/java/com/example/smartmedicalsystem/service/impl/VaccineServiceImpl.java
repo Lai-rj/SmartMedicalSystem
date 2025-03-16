@@ -25,4 +25,9 @@ public class VaccineServiceImpl extends ServiceImpl<VaccineMapper, Vaccine> impl
     public List<Vaccine> queryAll(){
         return vaccineMapper.queryAll();
     }
+
+    @Override
+    public Vaccine selectByName(String name){
+        return vaccineMapper.selectByName(name);
+    }
 }

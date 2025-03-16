@@ -17,4 +17,5 @@ import java.util.List;
 @Mapper
 public interface VaccineMapper extends BaseMapper<Vaccine> {
     List<Vaccine> queryAll();
+    Vaccine selectByName(String name);
 }
