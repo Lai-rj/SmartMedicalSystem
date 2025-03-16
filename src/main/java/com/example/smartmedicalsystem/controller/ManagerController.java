@@ -40,7 +40,7 @@ public class ManagerController {
         if(manager!=null){
             result.put("flag",true);
             result.put("role","manager");
-            result.put("manager",manager);
+            result.put("user",manager);
         }else{
             result.put("flag",false);
             result.put("message","登录失败");
@@ -54,8 +54,7 @@ public class ManagerController {
         QueryWrapper<Manager> wrapper = new QueryWrapper();
         wrapper.eq("id", id);
         Manager manager = managerService.getOne(wrapper);
-        result.put("manager",manager);
-        result.put("role","manager");
+        result.put("user",manager);
         return objectMapper.writeValueAsString(result);
     }
 }

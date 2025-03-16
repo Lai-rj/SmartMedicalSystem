@@ -120,7 +120,6 @@ public class UserController {
         wrapper.eq("id",id);
         User user=userService.getOne(wrapper);
         result.put("user",user);
-        result.put("role","user");
         return objectMapper.writeValueAsString(result);
     }
 

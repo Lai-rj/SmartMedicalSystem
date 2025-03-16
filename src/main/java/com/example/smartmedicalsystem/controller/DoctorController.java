@@ -54,7 +54,7 @@ public class DoctorController {
         if (doctor != null) {
             result.put("flag", true);
             result.put("role", "doctor");
-            result.put("doctor", doctor);
+            result.put("user", doctor);
         } else {
             result.put("flag", false);
             result.put("message", "登录失败");
@@ -68,8 +68,7 @@ public class DoctorController {
         QueryWrapper<Doctor> wrapper = new QueryWrapper();
         wrapper.eq("id", id);
         Doctor doctor = doctorService.getOne(wrapper);
-        result.put("doctor", doctor);
-        result.put("role","doctor");
+        result.put("user", doctor);
         return objectMapper.writeValueAsString(result);
     }
 
