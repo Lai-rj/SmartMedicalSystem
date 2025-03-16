@@ -31,10 +31,10 @@ public class ManagerController {
     private IManagerService managerService;
     ObjectMapper objectMapper =new ObjectMapper();
     @RequestMapping("/loginManager")
-    public String login(String phone,String password) throws JsonProcessingException {
+    public String login(String name,String password) throws JsonProcessingException {
         Map result = new HashMap<>();
         QueryWrapper wrapper = new QueryWrapper();
-        wrapper.eq("phone",phone);
+        wrapper.eq("name",name);
         wrapper.eq("password",password);
         Manager manager = managerService.getOne(wrapper);
         if(manager!=null){
@@ -55,6 +55,7 @@ public class ManagerController {
         wrapper.eq("id", id);
         Manager manager = managerService.getOne(wrapper);
         result.put("manager",manager);
+        result.put("role","manager");
         return objectMapper.writeValueAsString(result);
     }
 }
