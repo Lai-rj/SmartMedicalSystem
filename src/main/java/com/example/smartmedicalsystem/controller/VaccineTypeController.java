@@ -37,7 +37,12 @@ public class VaccineTypeController {
         Map result = new HashMap<>();
         QueryWrapper<VaccineType> wrapper = new QueryWrapper();
         List<VaccineType> list= vaccineTypeService.list(wrapper);
-        result.put("list",list);
+        if(list!=null){
+            result.put("list",list);
+            result.put("flag",true);
+        }else {
+            result.put("flag",false);
+        }
         return objectMapper.writeValueAsString(result);
     }
 
@@ -48,7 +53,12 @@ public class VaccineTypeController {
         QueryWrapper<VaccineType> wrapper=new QueryWrapper();
         wrapper.eq("name",name);
         VaccineType vaccineType=vaccineTypeService.getOne(wrapper);
-        result.put("list",vaccineType);
+        if(vaccineType!=null){
+            result.put("list",vaccineType);
+            result.put("flag",true);
+        }else {
+            result.put("flag",false);
+        }
         return objectMapper.writeValueAsString(result);
     }
 

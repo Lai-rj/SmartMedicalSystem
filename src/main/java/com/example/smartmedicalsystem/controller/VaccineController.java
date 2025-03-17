@@ -36,7 +36,12 @@ public class VaccineController {
     public String queryAll() throws JsonProcessingException {
         Map result = new HashMap<>();
         List<Vaccine> list= vaccineService.queryAll();
-        result.put("list",list);
+        if(list!=null){
+            result.put("list",list);
+            result.put("flag",true);
+        }else {
+            result.put("flag",false);
+        }
         return objectMapper.writeValueAsString(result);
     }
 
@@ -45,7 +50,12 @@ public class VaccineController {
     public String selectByName(String name) throws JsonProcessingException {
         Map result=new HashMap();
         Vaccine vaccine=vaccineService.selectByName(name);
-        result.put("list",vaccine);
+        if(vaccine!=null){
+            result.put("list",vaccine);
+            result.put("flag",true);
+        }else {
+            result.put("flag",false);
+        }
         return objectMapper.writeValueAsString(result);
     }
 }

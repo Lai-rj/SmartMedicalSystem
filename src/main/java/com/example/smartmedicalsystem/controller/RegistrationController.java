@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2025-03-12
  */
 @RestController
-@RequestMapping("/example.smartmedicalsystem/registration")
+@RequestMapping("/registration")
 public class RegistrationController {
 
 }

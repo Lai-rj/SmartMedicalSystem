@@ -1,12 +1,15 @@
 package com.example.smartmedicalsystem.controller;
 
 
+import cn.hutool.extra.qrcode.QrCodeUtil;
+import cn.hutool.extra.qrcode.QrConfig;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.example.smartmedicalsystem.entity.Doctor;
 import com.example.smartmedicalsystem.entity.Manager;
 import com.example.smartmedicalsystem.entity.User;
 import com.example.smartmedicalsystem.entity.VaccineType;
+import com.example.smartmedicalsystem.service.QRService;
 import com.example.smartmedicalsystem.service.impl.DoctorServiceImpl;
 import com.example.smartmedicalsystem.service.impl.VaccineServiceImpl;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -17,6 +20,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
+import java.awt.*;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,11 +43,23 @@ public class DoctorController {
     private DoctorServiceImpl doctorService;
     ObjectMapper objectMapper = new ObjectMapper();
 
+    @Autowired
+    private QRService qrService;
+
+    //注入配置依赖
+    @Resource
+    QrConfig config;
+
     @RequestMapping("/queryAll")
     public String queryAll() throws JsonProcessingException {
         Map result = new HashMap();
         List<Doctor> list = doctorService.list();
-        result.put("list", list);
+        if(list!=null){
+            result.put("list",list);
+            result.put("flag",true);
+        }else {
+            result.put("flag",false);
+        }
         return objectMapper.writeValueAsString(result);
     }
 
@@ -142,5 +161,21 @@ public class DoctorController {
         }
 
         return objectMapper.writeValueAsString(result);
+    }
+
+    @RequestMapping("/code")
+    public void generateUserCode(Long doctorid, HttpServletResponse response) throws IOException {
+        QueryWrapper<Doctor> wrapper=new QueryWrapper();
+        wrapper.eq("id",doctorid);
+        Doctor doctor=this.doctorService.getOne(wrapper);
+        if(doctor.getStatus()==1){
+            config.setBackColor(Color.green.getRGB());
+        }else if(doctor.getStatus() ==2){
+            config.setBackColor(Color.yellow.getRGB());
+        }else{
+            config.setBackColor(Color.red.getRGB());
+        }
+
+        QrCodeUtil.generate(objectMapper.writeValueAsString(doctor),config,"png",response.getOutputStream());
     }
 }

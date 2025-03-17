@@ -1,11 +1,14 @@
 package com.example.smartmedicalsystem.controller;
 
 
+import cn.hutool.extra.qrcode.QrCodeUtil;
+import cn.hutool.extra.qrcode.QrConfig;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.smartmedicalsystem.entity.Doctor;
 import com.example.smartmedicalsystem.entity.Manager;
 import com.example.smartmedicalsystem.entity.User;
 import com.example.smartmedicalsystem.service.IManagerService;
+import com.example.smartmedicalsystem.service.QRService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +16,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
+import java.awt.*;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,6 +37,15 @@ public class ManagerController {
     @Autowired
     private IManagerService managerService;
     ObjectMapper objectMapper =new ObjectMapper();
+
+    @Autowired
+    private QRService qrService;
+
+    //注入配置依赖
+    @Resource
+    QrConfig config;
+
+
     @RequestMapping("/loginManager")
     public String login(String name,String password) throws JsonProcessingException {
         Map result = new HashMap<>();
@@ -56,5 +72,21 @@ public class ManagerController {
         Manager manager = managerService.getOne(wrapper);
         result.put("user",manager);
         return objectMapper.writeValueAsString(result);
+    }
+
+    @RequestMapping("/code")
+    public void generateUserCode(Long managerid, HttpServletResponse response) throws IOException {
+        QueryWrapper<Manager> wrapper=new QueryWrapper();
+        wrapper.eq("id",managerid);
+        Manager manager=this.managerService.getOne(wrapper);
+        if(manager.getStatus()==1){
+            config.setBackColor(Color.green.getRGB());
+        }else if(manager.getStatus() ==2){
+            config.setBackColor(Color.yellow.getRGB());
+        }else{
+            config.setBackColor(Color.red.getRGB());
+        }
+
+        QrCodeUtil.generate(objectMapper.writeValueAsString(manager),config,"png",response.getOutputStream());
     }
 }
