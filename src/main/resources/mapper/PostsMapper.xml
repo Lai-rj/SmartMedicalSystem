@@ -1,5 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.smartmedicalsystem.mapper.PostsMapper">
-
+<insert id="managerAddPosts" parameterType="com.example.smartmedicalsystem.entity.Posts">
+    INSERT INTO posts (
+        id,
+        posts_content,
+        posts_image,
+        create_time,
+        publisher,
+        registration_id,
+        publisher_type
+    ) VALUES (
+                 #{id},
+                 #{postsContent},
+                 #{postsImage},
+                 #{createTime},
+                 #{publisher},
+                 #{registrationId},
+                 #{publisherType}
+             )
+</insert>
 </mapper>

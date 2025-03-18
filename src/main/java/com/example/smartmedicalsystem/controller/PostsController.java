@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -71,6 +74,21 @@ public class PostsController {
         List<Posts> list=postsService.list(wrapper);
         if(list!=null && !list.isEmpty()){
             result.put("list",list);
+            result.put("flag",true);
+        }else {
+            result.put("flag",false);
+        }
+        return objectMapper.writeValueAsString(result);
+    }
+
+    @RequestMapping("/managerAddPosts")
+    public String managerAddPosts(Posts posts) throws JsonProcessingException {
+        // 创建 Date 对象表示当前时间
+        LocalDateTime currentTime = LocalDateTime.now();
+        posts.setCreateTime(currentTime);
+        Map result=new HashMap();
+        int count= postsService.managerAddPosts(posts);
+        if(count>0){
             result.put("flag",true);
         }else {
             result.put("flag",false);
