@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * <p>
@@ -42,6 +43,7 @@ public class Registration implements Serializable {
     /**
      * 挂号时间
      */
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime registrationTime;
 
     /**
@@ -58,7 +60,7 @@ public class Registration implements Serializable {
      * 挂号帖-状态-0待接诊-1已接诊-2完成
      */
     private Integer status;
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime bookTime;
 
 

@@ -73,7 +73,7 @@ public class DoctorController {
         if (doctor != null) {
             result.put("flag", true);
             result.put("role", "doctor");
-            result.put("user", doctor);
+            result.put("doctor", doctor);
         } else {
             result.put("flag", false);
             result.put("message", "登录失败");
@@ -87,7 +87,18 @@ public class DoctorController {
         QueryWrapper<Doctor> wrapper = new QueryWrapper();
         wrapper.eq("id", id);
         Doctor doctor = doctorService.getOne(wrapper);
-        result.put("user", doctor);
+        result.put("doctor", doctor);
+        return objectMapper.writeValueAsString(result);
+    }
+
+    @RequestMapping("/selectByDeptId")
+    public String selectByDeptId(int deptId) throws JsonProcessingException {
+        Map result = new HashMap();
+        QueryWrapper<Doctor> wrapper = new QueryWrapper();
+        wrapper.eq("department_id", deptId);
+        List<Doctor> doctorList = doctorService.list(wrapper);
+        result.put("list", doctorList);
+        result.put("user", "doctor");
         return objectMapper.writeValueAsString(result);
     }
 
