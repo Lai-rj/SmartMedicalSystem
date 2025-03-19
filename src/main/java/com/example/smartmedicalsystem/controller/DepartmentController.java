@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+
+import static java.lang.Integer.parseInt;
 
 /**
  * <p>
@@ -39,6 +42,22 @@ public class DepartmentController {
         return objectMapper.writeValueAsString(result);
     }
 
+    @RequestMapping("/queryParams")
+    public String queryParams(String name,String status) throws JsonProcessingException {
+        Map result=new HashMap();
+        QueryWrapper<Department> wrapper = new QueryWrapper<>();
+        if(!Objects.equals(name, "")){
+            name="%"+name+"%";
+            wrapper.like("name",name);
+        }
+        if(!Objects.equals(status, "")){
+            wrapper.eq("status",parseInt(status));
+        }
+        List<Department> list=departmentService.list(wrapper);
+        result.put("list",list);
+        return objectMapper.writeValueAsString(result);
+    }
+
     @RequestMapping("/updateStatus")
     public String updateStatus(Integer id,Integer status) throws JsonProcessingException {
         Map result=new HashMap();
@@ -46,6 +65,7 @@ public class DepartmentController {
         result.put("flag",update);
         return objectMapper.writeValueAsString(result);
     }
+
     @RequestMapping("/selectByDeptName")
     public String selectByDeptName(String name) throws JsonProcessingException {
         Map result = new HashMap();

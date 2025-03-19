@@ -72,7 +72,6 @@ public class ManagerController {
         wrapper.eq("id", id);
         Manager manager = managerService.getOne(wrapper);
         result.put("manager",manager);
-        result.put("user",manager);
         return objectMapper.writeValueAsString(result);
     }
 

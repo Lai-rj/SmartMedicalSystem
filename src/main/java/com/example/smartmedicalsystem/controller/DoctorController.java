@@ -67,6 +67,34 @@ public class DoctorController {
         return objectMapper.writeValueAsString(result);
     }
 
+    @RequestMapping("/queryParams")
+    public String queryParams(String name,String phone,String hosId,String deptId) throws JsonProcessingException {
+        Map result = new HashMap();
+        QueryWrapper<Doctor> wrapper = new QueryWrapper<>();
+
+        if(!Objects.equals(name, "")){
+            name="%" + name + "%";
+            wrapper.like("name",name);
+        }
+        if(!Objects.equals(phone, "")){
+            wrapper.eq("phone", phone);
+        }
+        if(!Objects.equals(hosId, "")){
+            wrapper.eq("host_id", parseInt(hosId));
+        }
+        if(!Objects.equals(deptId, "")){
+            wrapper.eq("department_id", parseInt(deptId));
+        }
+        List<Doctor> list = doctorService.list(wrapper);
+        if(list!=null){
+            result.put("list",list);
+            result.put("flag",true);
+        }else {
+            result.put("flag",false);
+        }
+        return objectMapper.writeValueAsString(result);
+    }
+
     @RequestMapping("/loginDoctor")
     public String login(String phone, String password) throws JsonProcessingException {
         Map result = new HashMap<>();
