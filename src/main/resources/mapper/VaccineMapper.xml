@@ -8,6 +8,10 @@
 
     <select id="selectByName" resultType="com.example.smartmedicalsystem.entity.Vaccine" parameterType="String">
         SELECT id, name, type_id, `function`, target, adverse_reaction, producer, produce_time, status
-        FROM vaccine where name=#{name}
+        FROM vaccine where name like concat('%', #{name}, '%')
     </select>
+
+    <update id="updateStatus" parameterType="com.example.smartmedicalsystem.entity.Vaccine">
+        update doctor set status=#{status} where id=#{id}
+    </update>
 </mapper>

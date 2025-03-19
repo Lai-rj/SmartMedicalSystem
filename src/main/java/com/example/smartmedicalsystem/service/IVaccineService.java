@@ -18,5 +18,6 @@ import java.util.List;
  */
 public interface IVaccineService extends IService<Vaccine> {
     List<Vaccine> queryAll();
-    Vaccine selectByName(String name);
+    List<Vaccine> selectByName(String name);
+    public boolean updateStatus(Integer id,Integer status);
 }

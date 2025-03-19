@@ -23,4 +23,9 @@ public class PostsServiceImpl extends ServiceImpl<PostsMapper, Posts> implements
     public int managerAddPosts(Posts posts){
         return postsMapper.managerAddPosts(posts);
     }
+
+    @Override
+    public boolean updatePosts(Posts posts){
+        return postsMapper.updatePosts(posts);
+    }
 }

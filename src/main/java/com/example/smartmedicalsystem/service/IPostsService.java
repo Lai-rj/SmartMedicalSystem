@@ -13,4 +13,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IPostsService extends IService<Posts> {
     public int managerAddPosts(Posts posts);
+    public boolean updatePosts(Posts posts);
 }

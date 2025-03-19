@@ -51,14 +51,22 @@ public class VaccineTypeController {
     public String selectByName(String name) throws JsonProcessingException {
         Map result=new HashMap();
         QueryWrapper<VaccineType> wrapper=new QueryWrapper();
-        wrapper.eq("name",name);
-        VaccineType vaccineType=vaccineTypeService.getOne(wrapper);
+        wrapper.like("name",name);
+        List<VaccineType> vaccineType=vaccineTypeService.list(wrapper);
         if(vaccineType!=null){
             result.put("list",vaccineType);
             result.put("flag",true);
         }else {
             result.put("flag",false);
         }
+        return objectMapper.writeValueAsString(result);
+    }
+
+    @RequestMapping("/updateStatus")
+    public String updateStatus(Integer id,Integer status) throws JsonProcessingException {
+        Map result=new HashMap();
+        boolean update= vaccineTypeService.updateStatus(id,status);
+        result.put("flag",update);
         return objectMapper.writeValueAsString(result);
     }
 

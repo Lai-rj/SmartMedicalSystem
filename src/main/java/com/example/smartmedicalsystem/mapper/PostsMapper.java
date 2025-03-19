@@ -2,6 +2,7 @@ package com.example.smartmedicalsystem.mapper;
 
 import com.example.smartmedicalsystem.entity.Posts;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import javafx.geometry.Pos;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -15,4 +16,5 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface PostsMapper extends BaseMapper<Posts> {
     int managerAddPosts(Posts posts);
+    boolean updatePosts (Posts posts);
 }

@@ -20,4 +20,8 @@
                  #{publisherType}
              )
 </insert>
+    <update id="updatePosts" parameterType="com.example.smartmedicalsystem.entity.Posts">
+        update posts set posts_content=#{postsContent}, posts_image=#{postsImage},
+                         publisher=#{publisher}, registration_id=#{registrationId}, publisher_type=#{publisherType} where id=#{id}
+    </update>
 </mapper>

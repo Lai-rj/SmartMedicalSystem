@@ -38,4 +38,11 @@ public class DepartmentController {
         return objectMapper.writeValueAsString(result);
     }
 
+    @RequestMapping("/updateStatus")
+    public String updateStatus(Integer id,Integer status) throws JsonProcessingException {
+        Map result=new HashMap();
+        boolean update= departmentService.updateStatus(id,status);
+        result.put("flag",update);
+        return objectMapper.writeValueAsString(result);
+    }
 }

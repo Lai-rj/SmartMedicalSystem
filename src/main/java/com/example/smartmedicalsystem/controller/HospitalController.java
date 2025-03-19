@@ -50,14 +50,22 @@ public class HospitalController {
     public String selectByName(String name) throws JsonProcessingException {
         Map result=new HashMap();
         QueryWrapper<Hospital> wrapper=new QueryWrapper();
-        wrapper.eq("name",name);
-        Hospital hospital=hospitalService.getOne(wrapper);
+        wrapper.like("name",name);
+        List<Hospital> hospital=hospitalService.list(wrapper);
         if(hospital!=null){
             result.put("list",hospital);
             result.put("flag",true);
         }else {
             result.put("flag",false);
         }
+        return objectMapper.writeValueAsString(result);
+    }
+
+    @RequestMapping("/updateStatus")
+    public String updateStatus(Integer id,Integer status) throws JsonProcessingException {
+        Map result=new HashMap();
+        boolean update= hospitalService.updateStatus(id,status);
+        result.put("flag",update);
         return objectMapper.writeValueAsString(result);
     }
 }

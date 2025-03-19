@@ -73,7 +73,7 @@ public class DoctorController {
         if (doctor != null) {
             result.put("flag", true);
             result.put("role", "doctor");
-            result.put("doctor", doctor);
+            result.put("user", doctor);
         } else {
             result.put("flag", false);
             result.put("message", "登录失败");
@@ -130,22 +130,6 @@ public class DoctorController {
         return objectMapper.writeValueAsString(result);
     }
 
-    @RequestMapping("/updateStatus")
-    public String updateStatus(Integer id,int status) throws JsonProcessingException {
-        Map result = new HashMap();
-        UpdateWrapper<Doctor> wrapper = new UpdateWrapper<>();
-        wrapper.eq("id",id);
-        wrapper.eq("status",status);
-        boolean flag = doctorService.update(wrapper);
-        if(flag){
-            result.put("message","success");
-        }
-        else{
-            result.put("message","fail");
-        }
-        return objectMapper.writeValueAsString(result);
-    }
-
     @RequestMapping("/delete")
     public String batchDelete(Integer id) throws JsonProcessingException {
         Map result = new HashMap();
@@ -188,5 +172,13 @@ public class DoctorController {
         }
 
         QrCodeUtil.generate(objectMapper.writeValueAsString(doctor),config,"png",response.getOutputStream());
+    }
+
+    @RequestMapping("/updateStatus")
+    public String updateStatus(Integer id,Integer status) throws JsonProcessingException {
+        Map result=new HashMap();
+        boolean update= doctorService.updateStatus(id,status);
+        result.put("flag",update);
+        return objectMapper.writeValueAsString(result);
     }
 }

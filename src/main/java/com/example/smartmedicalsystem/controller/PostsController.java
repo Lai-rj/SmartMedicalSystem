@@ -9,10 +9,13 @@ import com.example.smartmedicalsystem.service.impl.PostsServiceImpl;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.Writer;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -93,6 +96,43 @@ public class PostsController {
         }else {
             result.put("flag",false);
         }
+        return objectMapper.writeValueAsString(result);
+    }
+
+    //http://localhost:8088/posts/updatePosts?id=31&postsContent=0&postsImage=0&createTime=2025-03-18%2016:34:56&publisher=6&registrationId=0&publisherType=0
+    @RequestMapping("/updatePosts")
+    public String updatePosts(Posts posts) throws JsonProcessingException {
+        Map result=new HashMap();
+        boolean update = postsService.updatePosts(posts);
+        result.put("flag",update);
+        return objectMapper.writeValueAsString(result);
+    }
+
+    //http://localhost:8088/posts/deletePosts?id=31
+    @RequestMapping("/deletePosts")
+    public String deletePosts(Integer id) throws JsonProcessingException {
+        Map result=new HashMap();
+        QueryWrapper<Posts> wrapper=new QueryWrapper();
+        wrapper.eq("id",id);
+        boolean remove = postsService.remove(wrapper);
+        result.put("flag",remove);
+        return objectMapper.writeValueAsString(result);
+    }
+
+    @RequestMapping("/deleteBatchPosts")
+    public String deleteBatchPosts(@RequestBody Map<String, List<Integer>> request) throws JsonProcessingException {
+        Map result=new HashMap();
+        boolean bool=true;
+        List<Integer> ids = request.get("ids");
+        for(Integer id : ids){
+            QueryWrapper<Posts> wrapper=new QueryWrapper();
+            wrapper.eq("id",id);
+            boolean remove = postsService.remove(wrapper);
+            if(!remove){
+                bool=false;
+            }
+        }
+        result.put("flag",bool);
         return objectMapper.writeValueAsString(result);
     }
 }

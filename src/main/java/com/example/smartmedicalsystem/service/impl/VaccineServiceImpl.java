@@ -1,6 +1,7 @@
 package com.example.smartmedicalsystem.service.impl;
 
 import com.example.smartmedicalsystem.entity.Vaccine;
+import com.example.smartmedicalsystem.mapper.DoctorMapper;
 import com.example.smartmedicalsystem.mapper.VaccineMapper;
 import com.example.smartmedicalsystem.service.IVaccineService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -27,7 +28,12 @@ public class VaccineServiceImpl extends ServiceImpl<VaccineMapper, Vaccine> impl
     }
 
     @Override
-    public Vaccine selectByName(String name){
+    public List<Vaccine> selectByName(String name){
         return vaccineMapper.selectByName(name);
+    }
+
+    @Override
+    public boolean updateStatus(Integer id,Integer status){
+        return vaccineMapper.updateStatus(id,status);
     }
 }

@@ -12,5 +12,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2025-03-12
  */
 public interface IHospitalService extends IService<Hospital> {
-
+    public boolean updateStatus(Integer id,Integer status);
 }

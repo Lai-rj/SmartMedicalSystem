@@ -1,9 +1,12 @@
 package com.example.smartmedicalsystem.service.impl;
 
 import com.example.smartmedicalsystem.entity.Hospital;
+import com.example.smartmedicalsystem.mapper.DoctorMapper;
 import com.example.smartmedicalsystem.mapper.HospitalMapper;
 import com.example.smartmedicalsystem.service.IHospitalService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.apache.coyote.http2.HpackDecoder;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -16,5 +19,11 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class HospitalServiceImpl extends ServiceImpl<HospitalMapper, Hospital> implements IHospitalService {
+    @Autowired
+    private HospitalMapper hospitalMapper;
 
+    @Override
+    public boolean updateStatus(Integer id,Integer status){
+        return hospitalMapper.updateStatus(id,status);
+    }
 }
