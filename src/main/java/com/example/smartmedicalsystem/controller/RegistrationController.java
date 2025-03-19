@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -56,4 +57,6 @@ public class RegistrationController {
         result.put("flag", true);
         return objectMapper.writeValueAsString(result);
     }
+
+
 }

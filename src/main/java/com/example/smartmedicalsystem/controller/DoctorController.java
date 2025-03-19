@@ -9,6 +9,7 @@ import com.example.smartmedicalsystem.entity.Doctor;
 import com.example.smartmedicalsystem.entity.Manager;
 import com.example.smartmedicalsystem.entity.User;
 import com.example.smartmedicalsystem.entity.VaccineType;
+import com.example.smartmedicalsystem.service.IDepartmentService;
 import com.example.smartmedicalsystem.service.QRService;
 import com.example.smartmedicalsystem.service.impl.DoctorServiceImpl;
 import com.example.smartmedicalsystem.service.impl.VaccineServiceImpl;
@@ -27,6 +28,9 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+
+import static java.lang.Integer.parseInt;
 
 /**
  * <p>
@@ -51,9 +55,24 @@ public class DoctorController {
     QrConfig config;
 
     @RequestMapping("/queryAll")
-    public String queryAll() throws JsonProcessingException {
+    public String queryAll(String name,String phone,String hosId,String deptId) throws JsonProcessingException {
         Map result = new HashMap();
-        List<Doctor> list = doctorService.list();
+        QueryWrapper<Doctor> wrapper = new QueryWrapper<>();
+
+        if(!Objects.equals(name, "")){
+            name="%" + name + "%";
+            wrapper.like("name",name);
+        }
+        else if(!Objects.equals(phone, "")){
+            wrapper.eq("phone", phone);
+        }
+        else if(!Objects.equals(hosId, "")){
+            wrapper.eq("host_id", parseInt(hosId));
+        }
+        else if(!Objects.equals(deptId, "")){
+            wrapper.eq("department_id", parseInt(deptId));
+        }
+        List<Doctor> list = doctorService.list(wrapper);
         if(list!=null){
             result.put("list",list);
             result.put("flag",true);
@@ -73,7 +92,7 @@ public class DoctorController {
         if (doctor != null) {
             result.put("flag", true);
             result.put("role", "doctor");
-            result.put("doctor", doctor);
+            result.put("user", "doctor");
         } else {
             result.put("flag", false);
             result.put("message", "登录失败");

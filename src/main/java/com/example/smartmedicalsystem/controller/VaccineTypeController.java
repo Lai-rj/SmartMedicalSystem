@@ -51,7 +51,7 @@ public class VaccineTypeController {
     public String selectByName(String name) throws JsonProcessingException {
         Map result=new HashMap();
         QueryWrapper<VaccineType> wrapper=new QueryWrapper();
-        wrapper.eq("name",name);
+        wrapper.like("name",name);
         VaccineType vaccineType=vaccineTypeService.getOne(wrapper);
         if(vaccineType!=null){
             result.put("list",vaccineType);
