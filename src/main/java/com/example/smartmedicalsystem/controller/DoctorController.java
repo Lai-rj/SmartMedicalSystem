@@ -55,7 +55,20 @@ public class DoctorController {
     QrConfig config;
 
     @RequestMapping("/queryAll")
-    public String queryAll(String name,String phone,String hosId,String deptId) throws JsonProcessingException {
+    public String queryAll() throws JsonProcessingException {
+        Map result = new HashMap();
+        List<Doctor> list = doctorService.list();
+        if(list!=null){
+            result.put("list",list);
+            result.put("flag",true);
+        }else {
+            result.put("flag",false);
+        }
+        return objectMapper.writeValueAsString(result);
+    }
+
+    @RequestMapping("/queryParams")
+    public String queryParams(String name,String phone,String hosId,String deptId) throws JsonProcessingException {
         Map result = new HashMap();
         QueryWrapper<Doctor> wrapper = new QueryWrapper<>();
 
@@ -63,13 +76,13 @@ public class DoctorController {
             name="%" + name + "%";
             wrapper.like("name",name);
         }
-        else if(!Objects.equals(phone, "")){
+        if(!Objects.equals(phone, "")){
             wrapper.eq("phone", phone);
         }
-        else if(!Objects.equals(hosId, "")){
+        if(!Objects.equals(hosId, "")){
             wrapper.eq("host_id", parseInt(hosId));
         }
-        else if(!Objects.equals(deptId, "")){
+        if(!Objects.equals(deptId, "")){
             wrapper.eq("department_id", parseInt(deptId));
         }
         List<Doctor> list = doctorService.list(wrapper);
@@ -92,7 +105,7 @@ public class DoctorController {
         if (doctor != null) {
             result.put("flag", true);
             result.put("role", "doctor");
-            result.put("user", "doctor");
+            result.put("user", doctor);
         } else {
             result.put("flag", false);
             result.put("message", "登录失败");
@@ -106,6 +119,7 @@ public class DoctorController {
         QueryWrapper<Doctor> wrapper = new QueryWrapper();
         wrapper.eq("id", id);
         Doctor doctor = doctorService.getOne(wrapper);
+        System.out.println(doctor);
         result.put("doctor", doctor);
         return objectMapper.writeValueAsString(result);
     }
