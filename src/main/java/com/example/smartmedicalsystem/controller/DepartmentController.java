@@ -1,6 +1,7 @@
 package com.example.smartmedicalsystem.controller;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.smartmedicalsystem.entity.Department;
 import com.example.smartmedicalsystem.entity.Doctor;
 import com.example.smartmedicalsystem.service.IDepartmentService;
@@ -43,6 +44,15 @@ public class DepartmentController {
         Map result=new HashMap();
         boolean update= departmentService.updateStatus(id,status);
         result.put("flag",update);
+        return objectMapper.writeValueAsString(result);
+    }
+    @RequestMapping("/selectByDeptName")
+    public String selectByDeptName(String name) throws JsonProcessingException {
+        Map result = new HashMap();
+        QueryWrapper<Department> wrapper = new QueryWrapper<>();
+        wrapper.eq("name",name);
+        Department department = departmentService.getOne(wrapper);
+        result.put("dept",department);
         return objectMapper.writeValueAsString(result);
     }
 }

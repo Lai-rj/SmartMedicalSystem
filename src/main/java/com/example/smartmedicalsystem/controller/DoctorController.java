@@ -9,6 +9,7 @@ import com.example.smartmedicalsystem.entity.Doctor;
 import com.example.smartmedicalsystem.entity.Manager;
 import com.example.smartmedicalsystem.entity.User;
 import com.example.smartmedicalsystem.entity.VaccineType;
+import com.example.smartmedicalsystem.service.IDepartmentService;
 import com.example.smartmedicalsystem.service.QRService;
 import com.example.smartmedicalsystem.service.impl.DoctorServiceImpl;
 import com.example.smartmedicalsystem.service.impl.VaccineServiceImpl;
@@ -27,6 +28,9 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+
+import static java.lang.Integer.parseInt;
 
 /**
  * <p>
@@ -120,6 +124,22 @@ public class DoctorController {
         Map result = new HashMap();
         UpdateWrapper<Doctor> wrapper = new UpdateWrapper<>();
         wrapper.eq("doctor", doctor);
+        boolean flag = doctorService.update(wrapper);
+        if(flag){
+            result.put("message","success");
+        }
+        else{
+            result.put("message","fail");
+        }
+        return objectMapper.writeValueAsString(result);
+    }
+
+    @RequestMapping("/updateStatus")
+    public String updateStatus(Integer id,int status) throws JsonProcessingException {
+        Map result = new HashMap();
+        UpdateWrapper<Doctor> wrapper = new UpdateWrapper<>();
+        wrapper.eq("id",id);
+        wrapper.eq("status",status);
         boolean flag = doctorService.update(wrapper);
         if(flag){
             result.put("message","success");
