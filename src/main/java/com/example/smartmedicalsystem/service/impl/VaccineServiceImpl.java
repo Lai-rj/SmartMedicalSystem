@@ -1,5 +1,6 @@
 package com.example.smartmedicalsystem.service.impl;
 
+import com.example.smartmedicalsystem.entity.Posts;
 import com.example.smartmedicalsystem.entity.Vaccine;
 import com.example.smartmedicalsystem.mapper.DoctorMapper;
 import com.example.smartmedicalsystem.mapper.VaccineMapper;
@@ -22,6 +23,17 @@ import java.util.List;
 public class VaccineServiceImpl extends ServiceImpl<VaccineMapper, Vaccine> implements IVaccineService {
     @Autowired
     private VaccineMapper vaccineMapper;
+
+    @Override
+    public int managerAddVaccine(Vaccine vaccine){
+        return vaccineMapper.managerAddVaccine(vaccine);
+    }
+
+    @Override
+    public boolean updateVaccine(Vaccine vaccine){
+        return vaccineMapper.updateVaccine(vaccine);
+    }
+
     @Override
     public List<Vaccine> queryAll(){
         return vaccineMapper.queryAll();

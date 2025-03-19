@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * <p>
@@ -47,12 +48,14 @@ public class AppointmentVaccine implements Serializable {
     /**
      * 预约接种时间
      */
-    private LocalDateTime appDate;
+//    private LocalDateTime appDate;
+    private String appDate;
 
     /**
      * 创建时间
      */
-    private LocalDateTime createTime;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private String createTime;
 
 
 }

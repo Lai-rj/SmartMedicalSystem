@@ -14,4 +14,40 @@
     <update id="updateStatus" parameterType="com.example.smartmedicalsystem.entity.Vaccine">
         update doctor set status=#{status} where id=#{id}
     </update>
+
+    <insert id="managerAddVaccine" parameterType="com.example.smartmedicalsystem.entity.Vaccine">
+        INSERT INTO vaccine (
+            id,
+            name,
+            type_id,
+            `function`,
+            target,
+            adverse_reaction,
+            producer,
+            produce_time,
+            status
+        ) VALUES (
+                     #{id},
+                     #{name},
+                     #{typeId},
+                     #{function},
+                     #{target},
+                     #{adverseReaction},
+                     #{producer},
+                     #{produceTime},
+                     #{status}
+                 )
+    </insert>
+    <update id="updateVaccine" parameterType="com.example.smartmedicalsystem.entity.Vaccine">
+        update vaccine
+        set
+            name = #{name},
+            type_id = #{typeId},
+            `function` = #{function},
+            target = #{target},
+            adverse_reaction = #{adverseReaction},
+            producer = #{producer},
+            status = #{status}
+        where id = #{id}
+    </update>
 </mapper>

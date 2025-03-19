@@ -1,5 +1,7 @@
 package com.example.smartmedicalsystem.service.impl;
 
+import com.example.smartmedicalsystem.entity.Posts;
+import com.example.smartmedicalsystem.entity.Vaccine;
 import com.example.smartmedicalsystem.entity.VaccineType;
 import com.example.smartmedicalsystem.mapper.DoctorMapper;
 import com.example.smartmedicalsystem.mapper.VaccineTypeMapper;
@@ -20,6 +22,16 @@ import org.springframework.stereotype.Service;
 public class VaccineTypeServiceImpl extends ServiceImpl<VaccineTypeMapper, VaccineType> implements IVaccineTypeService {
     @Autowired
     private VaccineTypeMapper vaccineTypeMapper;
+
+    @Override
+    public int managerAddVaccineType(VaccineType vaccineType){
+        return vaccineTypeMapper.managerAddVaccineType(vaccineType);
+    }
+
+    @Override
+    public boolean updateVaccineType(VaccineType vaccineType){
+        return vaccineTypeMapper.updateVaccineType(vaccineType);
+    }
 
     @Override
     public boolean updateStatus(Integer id,Integer status){

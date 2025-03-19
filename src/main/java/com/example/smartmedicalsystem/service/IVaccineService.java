@@ -1,5 +1,6 @@
 package com.example.smartmedicalsystem.service;
 
+import com.example.smartmedicalsystem.entity.Posts;
 import com.example.smartmedicalsystem.entity.Vaccine;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.smartmedicalsystem.mapper.VaccineMapper;
@@ -20,4 +21,7 @@ public interface IVaccineService extends IService<Vaccine> {
     List<Vaccine> queryAll();
     List<Vaccine> selectByName(String name);
     public boolean updateStatus(Integer id,Integer status);
+
+    public int managerAddVaccine(Vaccine vaccine);
+    public boolean updateVaccine(Vaccine vaccine);
 }

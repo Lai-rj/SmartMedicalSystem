@@ -162,22 +162,6 @@ public class DoctorController {
         return objectMapper.writeValueAsString(result);
     }
 
-    @RequestMapping("/updateStatus")
-    public String updateStatus(Integer id,int status) throws JsonProcessingException {
-        Map result = new HashMap();
-        UpdateWrapper<Doctor> wrapper = new UpdateWrapper<>();
-        wrapper.eq("id",id);
-        wrapper.eq("status",status);
-        boolean flag = doctorService.update(wrapper);
-        if(flag){
-            result.put("message","success");
-        }
-        else{
-            result.put("message","fail");
-        }
-        return objectMapper.writeValueAsString(result);
-    }
-
     @RequestMapping("/delete")
     public String batchDelete(Integer id) throws JsonProcessingException {
         Map result = new HashMap();

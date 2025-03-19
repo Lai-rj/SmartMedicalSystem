@@ -1,5 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.smartmedicalsystem.mapper.AppointmentVaccineMapper">
-
+    <insert id="managerAddAppVaccine" parameterType="com.example.smartmedicalsystem.entity.AppointmentVaccine">
+        INSERT INTO appointment_vaccine (
+            id,
+            vaccine_id,
+            nums,
+            apped_nums,
+            address,
+            app_date,
+            create_time
+        ) VALUES (
+                     #{id},
+                     #{vaccineId},
+                     #{nums},
+                     #{appedNums},
+                     #{address},
+                     #{appDate},
+                     #{createTime}
+                 )
+    </insert>
+    <update id="updateAppVaccine" parameterType="com.example.smartmedicalsystem.entity.AppointmentVaccine">
+        update appointment_vaccine
+        set
+            vaccine_id = #{vaccineId},
+            nums = #{nums},
+            app_date = #{appDate},
+            apped_nums = #{appedNums},
+            address = #{address}
+        where id = #{id}
+    </update>
 </mapper>

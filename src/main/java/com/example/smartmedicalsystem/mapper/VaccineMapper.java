@@ -1,5 +1,6 @@
 package com.example.smartmedicalsystem.mapper;
 
+import com.example.smartmedicalsystem.entity.Posts;
 import com.example.smartmedicalsystem.entity.Vaccine;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
@@ -20,4 +21,7 @@ public interface VaccineMapper extends BaseMapper<Vaccine> {
     List<Vaccine> queryAll();
     List<Vaccine> selectByName(String name);
     public boolean updateStatus(@Param("id") Integer id, @Param("status") Integer status);
+
+    int managerAddVaccine(Vaccine vaccine);
+    boolean updateVaccine(Vaccine vaccine);
 }

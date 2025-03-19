@@ -1,5 +1,6 @@
 package com.example.smartmedicalsystem.service;
 
+import com.example.smartmedicalsystem.entity.Posts;
 import com.example.smartmedicalsystem.entity.VaccineType;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -13,4 +14,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IVaccineTypeService extends IService<VaccineType> {
     public boolean updateStatus(Integer id,Integer status);
+
+    public int managerAddVaccineType(VaccineType vaccineType);
+    public boolean updateVaccineType(VaccineType vaccineType);
 }
