@@ -60,4 +60,35 @@ public class VaccineRecordViewController {
         }
         return objectMapper.writeValueAsString(result);
     }
+
+    @RequestMapping("/selectByUserId")
+    public String selectByUserId(Integer userId) throws JsonProcessingException {
+        Map result=new HashMap();
+        QueryWrapper wrapper=new QueryWrapper();
+        wrapper.eq("user_id",userId);
+        List<VaccineRecordView> list=vaccineRecordViewService.list(wrapper);
+        if(list!=null){
+            result.put("list",list);
+            result.put("flag",true);
+        }else {
+            result.put("flag",false);
+        }
+        return objectMapper.writeValueAsString(result);
+    }
+
+    @RequestMapping("selectByIds")
+    public String selectByIds(Integer userId,Integer doctorId) throws JsonProcessingException {
+        Map result=new HashMap();
+        QueryWrapper wrapper=new QueryWrapper();
+        wrapper.eq("user_id",userId);
+        wrapper.eq("doctor_id",doctorId);
+        List<VaccineRecordView> list=vaccineRecordViewService.list(wrapper);
+        if(list!=null){
+            result.put("list",list);
+            result.put("flag",true);
+        }else {
+            result.put("flag",false);
+        }
+        return objectMapper.writeValueAsString(result);
+    }
 }

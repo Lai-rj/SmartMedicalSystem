@@ -108,6 +108,7 @@ public class UserController {
         Map<String, Object> result = new HashMap<>();
         List<Integer> ids=request.get("ids");
         // 批量删除医生记录
+        System.out.println(ids);
         boolean flag = userService.removeByIds(ids);
         if (flag) {
             result.put("flag", true);

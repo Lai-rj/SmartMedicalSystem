@@ -122,6 +122,17 @@ public class DoctorController {
         return objectMapper.writeValueAsString(result);
     }
 
+    @RequestMapping("/selectByHospitalId")
+    public String selectByHospitalId(int hospitalId) throws JsonProcessingException {
+        Map result = new HashMap();
+        QueryWrapper<Doctor> wrapper = new QueryWrapper();
+        wrapper.eq("host_id", hospitalId);
+        List<Doctor> doctorList = doctorService.list(wrapper);
+        result.put("list", doctorList);
+        result.put("user", "doctor");
+        return objectMapper.writeValueAsString(result);
+    }
+
     @RequestMapping("/selectByDeptId")
     public String selectByDeptId(int deptId) throws JsonProcessingException {
         Map result = new HashMap();
@@ -138,10 +149,10 @@ public class DoctorController {
         Map result = new HashMap();
         boolean flag = doctorService.save(newDoctor);
         if(flag){
-            result.put("message","success");
+            result.put("flag",true);
         }
         else{
-            result.put("message","fail");
+            result.put("flag",false);
         }
         return objectMapper.writeValueAsString(result);
     }
@@ -149,14 +160,14 @@ public class DoctorController {
     @RequestMapping("/update")
     public String updateDoctor(Doctor doctor) throws JsonProcessingException {
         Map result = new HashMap();
-        UpdateWrapper<Doctor> wrapper = new UpdateWrapper<>();
-        wrapper.eq("doctor", doctor);
-        boolean flag = doctorService.update(wrapper);
+        QueryWrapper<Doctor> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("id",doctor.getId());
+        boolean flag = doctorService.update(doctor,queryWrapper);
         if(flag){
-            result.put("message","success");
+            result.put("flag",true);
         }
         else{
-            result.put("message","fail");
+            result.put("flag",false);
         }
         return objectMapper.writeValueAsString(result);
     }
@@ -166,10 +177,10 @@ public class DoctorController {
         Map result = new HashMap();
         boolean flag = doctorService.removeById(id);
         if(flag){
-            result.put("message","success");
+            result.put("flag",true);
         }
         else{
-            result.put("message","fail");
+            result.put("flag",false);
         }
         return objectMapper.writeValueAsString(result);
     }
@@ -181,9 +192,9 @@ public class DoctorController {
         // 批量删除医生记录
         boolean flag = doctorService.removeByIds(ids); // 假设 doctorService 有这个方法
         if (flag) {
-            result.put("message", "success");
+            result.put("flag", true);
         } else {
-            result.put("message", "fail");
+            result.put("flag", false);
         }
 
         return objectMapper.writeValueAsString(result);
