@@ -1,5 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.smartmedicalsystem.mapper.RegistrationMapper">
+    <insert id="managerAddRegistration" parameterType="com.example.smartmedicalsystem.entity.Registration">
+        INSERT INTO registration (
+            id,
+            disease_type,
+            description,
+            describe_img,
+            registration_time,
+            doctor_id,
+            user_id,
+            status,
+            book_time
+        )
+        VALUES (
+                   #{id},
+                   #{diseaseType},
+                   #{description},
+                   #{describeImg},
+                   #{registrationTime},
+                   #{doctorId},
+                   #{userId},
+                   #{status},
+                   #{bookTime}
+               )
+    </insert>
 
+    <update id="updateRegistration" parameterType="com.example.smartmedicalsystem.entity.Registration">
+        UPDATE registration
+        SET
+            disease_type = #{diseaseType},
+            description = #{description},
+            describe_img = #{describeImg},
+            registration_time = #{registrationTime},
+            doctor_id = #{doctorId},
+            user_id = #{userId},
+            status = #{status},
+            book_time = #{bookTime}
+        WHERE
+            id = #{id}
+    </update>
+
+    <update id="updateStatus" parameterType="com.example.smartmedicalsystem.entity.Registration">
+        UPDATE registration
+        SET
+            status = #{status}
+        WHERE
+            id = #{id}
+    </update>
 </mapper>

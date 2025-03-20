@@ -44,7 +44,7 @@ public class Registration implements Serializable {
      * 挂号时间
      */
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime registrationTime;
+    private String registrationTime;
 
     /**
      * 医生编号
@@ -61,7 +61,7 @@ public class Registration implements Serializable {
      */
     private Integer status;
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime bookTime;
+    private String bookTime;
 
 
 }
