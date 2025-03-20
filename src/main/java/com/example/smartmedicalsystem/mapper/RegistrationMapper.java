@@ -1,8 +1,10 @@
 package com.example.smartmedicalsystem.mapper;
 
+import com.example.smartmedicalsystem.entity.Manager;
 import com.example.smartmedicalsystem.entity.Registration;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * <p>
@@ -14,5 +16,8 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface RegistrationMapper extends BaseMapper<Registration> {
+    public boolean updateStatus(@Param("id") Integer id, @Param("status") Integer status);
 
+    int managerAddRegistration(Registration registration);
+    boolean updateRegistration(Registration registration);
 }

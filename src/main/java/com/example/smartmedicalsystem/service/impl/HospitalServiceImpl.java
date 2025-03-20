@@ -1,6 +1,8 @@
 package com.example.smartmedicalsystem.service.impl;
 
+import com.example.smartmedicalsystem.entity.Department;
 import com.example.smartmedicalsystem.entity.Hospital;
+import com.example.smartmedicalsystem.entity.Manager;
 import com.example.smartmedicalsystem.mapper.DoctorMapper;
 import com.example.smartmedicalsystem.mapper.HospitalMapper;
 import com.example.smartmedicalsystem.service.IHospitalService;
@@ -25,5 +27,15 @@ public class HospitalServiceImpl extends ServiceImpl<HospitalMapper, Hospital> i
     @Override
     public boolean updateStatus(Integer id,Integer status){
         return hospitalMapper.updateStatus(id,status);
+    }
+
+    @Override
+    public int managerAddHospital(Hospital hospital){
+        return hospitalMapper.managerAddHospital(hospital);
+    }
+
+    @Override
+    public boolean updateHospital(Hospital hospital){
+        return hospitalMapper.updateHospital(hospital);
     }
 }

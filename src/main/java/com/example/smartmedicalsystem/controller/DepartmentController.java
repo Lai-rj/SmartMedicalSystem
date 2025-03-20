@@ -4,14 +4,17 @@ package com.example.smartmedicalsystem.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.smartmedicalsystem.entity.Department;
 import com.example.smartmedicalsystem.entity.Doctor;
+import com.example.smartmedicalsystem.entity.Manager;
 import com.example.smartmedicalsystem.service.IDepartmentService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -73,6 +76,55 @@ public class DepartmentController {
         wrapper.eq("name",name);
         Department department = departmentService.getOne(wrapper);
         result.put("dept",department);
+        return objectMapper.writeValueAsString(result);
+    }
+
+    @RequestMapping("/managerAddDepartment")
+    public String managerAddDepartment(Department department) throws JsonProcessingException {
+        Map result=new HashMap();
+        int count= departmentService.managerAddDepartment(department);
+        if(count>0){
+            result.put("flag",true);
+        }else {
+            result.put("flag",false);
+        }
+        return objectMapper.writeValueAsString(result);
+    }
+
+    //http://localhost:8088/manager/updateManager?id=31&postsContent=0&postsImage=0&createTime=2025-03-18%2016:34:56&publisher=6&registrationId=0&publisherType=0
+    @RequestMapping("/updateDepartment")
+    public String updateDepartment(Department department) throws JsonProcessingException {
+        Map result=new HashMap();
+        boolean update = departmentService.updateDepartment(department);
+        result.put("flag",update);
+        return objectMapper.writeValueAsString(result);
+    }
+
+    //http://localhost:8088/posts/deletePosts?id=31
+    @RequestMapping("/deleteDepartment")
+    public String deleteDepartment(Integer id) throws JsonProcessingException {
+        Map result=new HashMap();
+        QueryWrapper<Department> wrapper=new QueryWrapper();
+        wrapper.eq("id",id);
+        boolean remove = departmentService.remove(wrapper);
+        result.put("flag",remove);
+        return objectMapper.writeValueAsString(result);
+    }
+
+    @RequestMapping("/deleteBatchDepartment")
+    public String deleteBatchDepartment(@RequestBody Map<String, List<Integer>> request) throws JsonProcessingException {
+        Map result=new HashMap();
+        boolean bool=true;
+        List<Integer> ids = request.get("ids");
+        for(Integer id : ids){
+            QueryWrapper<Department> wrapper=new QueryWrapper();
+            wrapper.eq("id",id);
+            boolean remove = departmentService.remove(wrapper);
+            if(!remove){
+                bool=false;
+            }
+        }
+        result.put("flag",bool);
         return objectMapper.writeValueAsString(result);
     }
 }
