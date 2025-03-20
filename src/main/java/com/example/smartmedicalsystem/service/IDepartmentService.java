@@ -2,6 +2,7 @@ package com.example.smartmedicalsystem.service;
 
 import com.example.smartmedicalsystem.entity.Department;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.example.smartmedicalsystem.entity.Manager;
 
 /**
  * <p>
@@ -13,4 +14,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IDepartmentService extends IService<Department> {
     public boolean updateStatus(Integer id,Integer status);
+
+    public int managerAddDepartment(Department department);
+    public boolean updateDepartment(Department department);
 }

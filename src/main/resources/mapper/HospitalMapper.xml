@@ -4,4 +4,36 @@
     <update id="updateStatus" parameterType="com.example.smartmedicalsystem.entity.Hospital">
         update doctor set status=#{status} where id=#{id}
     </update>
+
+    <insert id="managerAddHospital" parameterType="com.example.smartmedicalsystem.entity.Hospital">
+        INSERT INTO hospital (
+            id,
+            name,
+            address,
+            phone,
+            remark,
+            create_time,
+            status
+        ) VALUES (
+                     #{id},
+                     #{name},
+                     #{address},
+                     #{phone},
+                     #{remark},
+                     #{createTime},
+                     #{status}
+                 )
+    </insert>
+
+    <update id="updateHospital" parameterType="com.example.smartmedicalsystem.entity.Hospital">
+        update hospital
+        set
+            name = #{name},
+            address = #{address},
+            phone = #{phone},
+            remark = #{remark},
+            create_time = #{createTime},
+            status = #{status}
+        where id = #{id}
+    </update>
 </mapper>
