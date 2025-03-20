@@ -73,7 +73,6 @@ public class DoctorController {
         QueryWrapper<Doctor> wrapper = new QueryWrapper<>();
 
         if(!Objects.equals(name, "")){
-            name="%" + name + "%";
             wrapper.like("name",name);
         }
         if(!Objects.equals(phone, "")){

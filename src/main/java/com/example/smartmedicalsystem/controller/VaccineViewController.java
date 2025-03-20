@@ -1,10 +1,9 @@
 package com.example.smartmedicalsystem.controller;
 
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.example.smartmedicalsystem.entity.AppointmentVaccine;
+import com.example.smartmedicalsystem.entity.Vaccine;
 import com.example.smartmedicalsystem.entity.VaccineView;
-import com.example.smartmedicalsystem.service.impl.AppointmentVaccineServiceImpl;
+import com.example.smartmedicalsystem.service.IVaccineViewService;
 import com.example.smartmedicalsystem.service.impl.VaccineViewServiceImpl;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -28,5 +27,9 @@ import java.util.Map;
 @RestController
 @RequestMapping("/vaccineView")
 public class VaccineViewController {
+    @Autowired
+    private VaccineViewServiceImpl vaccineViewService;
+    ObjectMapper objectMapper = new ObjectMapper();
+
 
 }

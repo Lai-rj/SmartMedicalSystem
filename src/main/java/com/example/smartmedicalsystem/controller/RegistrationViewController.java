@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.smartmedicalsystem.entity.Registration;
 import com.example.smartmedicalsystem.entity.RegistrationView;
 import com.example.smartmedicalsystem.service.IRegistrationViewService;
+import com.example.smartmedicalsystem.service.impl.RegistrationServiceImpl;
+import com.example.smartmedicalsystem.service.impl.RegistrationViewServiceImpl;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +30,7 @@ import java.util.Map;
 @RequestMapping("/registrationView")
 public class RegistrationViewController {
     @Autowired
-    private IRegistrationViewService registrationViewService;
+    private RegistrationViewServiceImpl registrationViewService;
     ObjectMapper objectMapper = new ObjectMapper();
     @RequestMapping("/queryByUser")
     public String queryByUser(int userId) throws JsonProcessingException {
